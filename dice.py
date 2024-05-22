@@ -54,7 +54,43 @@ for i in range(0, k_1[0]):
     total = 0
     for j in range(n_1[i]):
         total += np.power((k_1[0]-i),j) * np.power((k_1[0]-i-1), n_1[i]-1-j)
-        #np.power(4,3)
-        #print(j)
-        #print(n_1[i]-1-j)
+    
     probs_1[i] *= total
+
+probs_2 = [0]*k_2[0]
+
+for i in range(0, k_2[0]):
+    probs_2[i] = 1/mult_sum(k_2[0:n_2[i]])
+    total = 0
+    for j in range(n_2[i]):
+        total += np.power((k_2[0]-i),j) * np.power((k_2[0]-i-1), n_2[i]-1-j)
+    probs_2[i] *= total
+
+cumsum_1 = np.cumsum(probs_1)
+cumsum_2 = np.cumsum(probs_2)
+
+if len(cumsum_1) < len(cumsum_2):
+    difference = len(cumsum_2) - len(cumsum_1)
+    for i in range(difference):
+        cumsum_1 = np.append(cumsum_1, 1)
+else:
+    difference = len(cumsum_1) - len(cumsum_2)
+    for i in range(difference):
+        cumsum_2 = np.append(cumsum_2, 1)
+
+
+prob_2_wins = 0
+for i in range(1, k_2[0]):
+    prob_2_wins += cumsum_1[i-1] * probs_2[i]
+
+prob_tie = 0
+for i in range(min(k_1[0], k_2[0])):
+    prob_tie += probs_1[i] * probs_2[i]
+
+prob_1_wins = 0
+for i in range(1, k_1[0]):
+    prob_1_wins += cumsum_2[i-1] * probs_1[i]
+
+totally = prob_2_wins + prob_1_wins + prob_tie
+
+print(totally)
