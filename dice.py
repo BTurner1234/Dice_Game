@@ -17,42 +17,44 @@ def mult_sum(num_list):
   return product
 
 # Testing example 
-player_1 = [5, 6, 3, 1, 6]
-player_2 = [3, 8, 1, 2]
+k_1 = [5, 6, 3, 1, 6]
+k_2 = [3, 8, 1, 2]
 
-player_1.sort()
-player_2.sort()
+k_1.sort()
+k_2.sort()
 
-player_1.reverse()
-player_2.reverse()
+k_1.reverse()
+k_2.reverse()
 
-player_1_num_dice_with_value = [0] * player_1[0]
-player_2_num_dice_with_value = [0] * player_2[0]
+n_1 = [0] * k_1[0]
+n_2 = [0] * k_2[0]
 count = 0
-for i in player_1:
+for i in k_1:
     count += 1
-    player_1_num_dice_with_value[i-1] += 1
+    n_1[i-1] += 1
 
-player_1_num_dice_with_value.reverse()
-player_1_num_dice_with_value = np.cumsum(player_1_num_dice_with_value)
+n_1.reverse()
+n_1 = np.cumsum(n_1)
 
 count = 0
-for i in player_2:
+for i in k_2:
     count += 1
-    player_2_num_dice_with_value[i-1] += 1
+    n_2[i-1] += 1
 
-player_2_num_dice_with_value.reverse()
-player_2_num_dice_with_value = np.cumsum(player_2_num_dice_with_value)
+n_2.reverse()
+n_2 = np.cumsum(n_2)
 
-print(player_1)
-print(player_1_num_dice_with_value)
+print(k_1)
+print(n_1)
 
-probs_1 = [0]*player_1[0]
+probs_1 = [0]*k_1[0]
 
-for i in range(0, player_1[0]):
-    probs_1[i] = 1/mult_sum(player_1[0:player_1_num_dice_with_value[i]])
+for i in range(0, k_1[0]):
+    probs_1[i] = 1/mult_sum(k_1[0:n_1[i]])
     total = 0
-    for j in range(player_1_num_dice_with_value[i]):
-        total +=1
-
-print(probs_1)
+    for j in range(n_1[i]):
+        total += np.power((k_1[0]-i),j) * np.power((k_1[0]-i-1), n_1[i]-1-j)
+        #np.power(4,3)
+        #print(j)
+        #print(n_1[i]-1-j)
+    probs_1[i] *= total
