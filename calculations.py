@@ -76,3 +76,17 @@ def calculate_winning_probabilities(probs_1, probs_2):
 
     return prob_1_wins, prob_2_wins, prob_tie
 
+def calculate_dice_game_probabilities(player1_dice, player2_dice):
+    """
+    Calculate and return the probabilities of player 1 winning, player 2 winning, and a tie.
+
+    Args:
+        player1_dice: List of face values for player 1's dice.
+        player2_dice: List of face values for player 2's dice.
+
+    Returns:
+        A tuple with the probabilities of player 1 winning, player 2 winning, and a tie.
+    """
+    probs_1 = calculate_probabilities(player1_dice)
+    probs_2 = calculate_probabilities(player2_dice)
+    return calculate_winning_probabilities(probs_1, probs_2)
