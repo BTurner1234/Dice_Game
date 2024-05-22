@@ -17,8 +17,8 @@ def mult_sum(num_list):
   return product
 
 # Testing example 
-k_1 = [5, 6, 3, 1, 6]
-k_2 = [3, 8, 1, 2]
+k_1 = [9, 9]
+k_2 = [8, 8, 8]
 
 k_1.sort()
 k_2.sort()
@@ -56,7 +56,7 @@ for i in range(0, k_1[0]):
         total += np.power((k_1[0]-i),j) * np.power((k_1[0]-i-1), n_1[i]-1-j)
     
     probs_1[i] *= total
-
+print(probs_1)
 probs_2 = [0]*k_2[0]
 
 for i in range(0, k_2[0]):
@@ -65,6 +65,9 @@ for i in range(0, k_2[0]):
     for j in range(n_2[i]):
         total += np.power((k_2[0]-i),j) * np.power((k_2[0]-i-1), n_2[i]-1-j)
     probs_2[i] *= total
+
+probs_1.reverse()
+probs_2.reverse()
 
 cumsum_1 = np.cumsum(probs_1)
 cumsum_2 = np.cumsum(probs_2)
@@ -91,6 +94,8 @@ prob_1_wins = 0
 for i in range(1, k_1[0]):
     prob_1_wins += cumsum_2[i-1] * probs_1[i]
 
-totally = prob_2_wins + prob_1_wins + prob_tie
+total_prob = prob_2_wins + prob_1_wins + prob_tie
 
-print(totally)
+print("Probability player 1 wins: ", np.round(prob_1_wins*100, 1), "%")
+print("Probability player 2 wins: ", np.round(prob_2_wins*100, 1), "%")
+print("Probability of a tie: ", np.round(prob_tie*100, 1), "%")
