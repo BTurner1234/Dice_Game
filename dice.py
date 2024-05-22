@@ -1,114 +1,94 @@
 import numpy as np
-import math
 
 def mult_sum(num_list):
-  """
-  This function calculates the product of all elements in a list.
+    """
+    This function calculates the product of all elements in a list.
 
-  Args:
-      num_list: A list of numbers.
+    Args:
+        num_list: A list of numbers.
 
-  Returns:
-      The product of all elements in the list.
-  """
-  product = 1
-  for num in num_list:
-    product *= num
-  return product
+    Returns:
+        The product of all elements in the list.
+    """
+    product = 1
+    for num in num_list:
+        product *= num
+    return product
 
-# Testing example 
-k_1 = [9, 9]  # Player 1's dice (list of face values)
-k_2 = [8, 8, 8]  # Player 2's dice (list of face values)
+def calculate_probabilities(dice_values):
+    """
+    This function calculates the probabilities for a given set of dice values.
 
-# Sort and reverse the dice lists for easier calculation
-k_1.sort()
-k_2.sort()
+    Args:
+        dice_values: A list of dice face values.
 
-k_1.reverse()
-k_2.reverse()
+    Returns:
+        A list of probabilities for each dice value.
+    """
+    dice_values.sort(reverse=True)
+    max_value = dice_values[0]
 
-# Initialise arrays to store the number of dice at or above all value from 1 to max(player)
-n_1 = [0] * k_1[0]
-n_2 = [0] * k_2[0]
+    # Initialise array to store the number of dice at or above each value
+    count_array = [0] * max_value
+    for value in dice_values:
+        count_array[value - 1] += 1
 
-# Increment based on die values
-count = 0
-for i in k_1:
-    count += 1
-    n_1[i-1] += 1
+    # Reverse and cumulative sum
+    count_array.reverse()
+    cumulative_count = np.cumsum(count_array)
 
-# Order array correctly
-n_1.reverse()
-n_1 = np.cumsum(n_1)
+    # Initialise probabilities array
+    probabilities = [0] * max_value
 
-# Repeat for Player 2
-count = 0
-for i in k_2:
-    count += 1
-    n_2[i-1] += 1
+    for i in range(max_value):
+        values_coefficient = 1 / mult_sum(dice_values[:cumulative_count[i]])
+        total_sum = sum(
+            np.power(max_value - i, j) * np.power(max_value - i - 1, cumulative_count[i] - 1 - j)
+            for j in range(cumulative_count[i])
+        )
+        probabilities[i] = values_coefficient * total_sum
 
-n_2.reverse()
-n_2 = np.cumsum(n_2)
+    probabilities.reverse()
+    return probabilities
 
-# Initialise array probabilities of n being the largest value
-# From 1 to max(player)
-probs_1 = [0]*k_1[0]
+def calculate_winning_probabilities(probs_1, probs_2):
+    """
+    This function calculates the probabilities of winning for both players and the probability of a tie.
 
-# Implement formula from Formulae.jpg
-for i in range(0, k_1[0]):
-    probs_1[i] = 1/mult_sum(k_1[0:n_1[i]]) # Calculate "values" coefficient
-    total = 0
-    # Calculate summation
-    for j in range(n_1[i]):
-        total += np.power((k_1[0]-i),j) * np.power((k_1[0]-i-1), n_1[i]-1-j)
-    
-    probs_1[i] *= total
+    Args:
+        probs_1: Probabilities for player 1.
+        probs_2: Probabilities for player 2.
 
-# Repeat for player 2
-probs_2 = [0]*k_2[0]
+    Returns:
+        A tuple with the probabilities of player 1 winning, player 2 winning, and a tie.
+    """
+    cumsum_1 = np.cumsum(probs_1)
+    cumsum_2 = np.cumsum(probs_2)
 
-for i in range(0, k_2[0]):
-    probs_2[i] = 1/mult_sum(k_2[0:n_2[i]])
-    total = 0
-    for j in range(n_2[i]):
-        total += np.power((k_2[0]-i),j) * np.power((k_2[0]-i-1), n_2[i]-1-j)
-    probs_2[i] *= total
+    # Ensure both cumulative sums have the same length
+    max_length = max(len(cumsum_1), len(cumsum_2))
+    cumsum_1 = np.pad(cumsum_1, (0, max_length - len(cumsum_1)), constant_values=1)
+    cumsum_2 = np.pad(cumsum_2, (0, max_length - len(cumsum_2)), constant_values=1)
 
-# Order probabilities correctly
-probs_1.reverse()
-probs_2.reverse()
+    prob_2_wins = sum(cumsum_1[i-1] * probs_2[i] for i in range(1, len(probs_2)))
+    prob_tie = sum(probs_1[i] * probs_2[i] for i in range(min(len(probs_1), len(probs_2))))
+    prob_1_wins = sum(cumsum_2[i-1] * probs_1[i] for i in range(1, len(probs_1)))
 
-# Cumulative sum of probabilities of each player
-cumsum_1 = np.cumsum(probs_1)
-cumsum_2 = np.cumsum(probs_2)
+    return prob_1_wins, prob_2_wins, prob_tie
 
-# Ensure both cumulative sums of probabilities have the same length
-if len(cumsum_1) < len(cumsum_2):
-    difference = len(cumsum_2) - len(cumsum_1)
-    for i in range(difference):
-        cumsum_1 = np.append(cumsum_1, 1)
-else:
-    difference = len(cumsum_1) - len(cumsum_2)
-    for i in range(difference):
-        cumsum_2 = np.append(cumsum_2, 1)
+# Testing example
+k_1 = [8, 8, 3, 8, 5, 8]  # Player 1's dice (list of face values)
+k_2 = [9, 7, 6, 4]  # Player 2's dice (list of face values)
 
-# Implement the "win" and "tie" formula:
-prob_2_wins = 0
-for i in range(1, k_2[0]):
-    prob_2_wins += cumsum_1[i-1] * probs_2[i]
+probs_1 = calculate_probabilities(k_1)
+probs_2 = calculate_probabilities(k_2)
 
-prob_tie = 0
-for i in range(min(k_1[0], k_2[0])):
-    prob_tie += probs_1[i] * probs_2[i]
-
-prob_1_wins = 0
-for i in range(1, k_1[0]):
-    prob_1_wins += cumsum_2[i-1] * probs_1[i]
+prob_1_wins, prob_2_wins, prob_tie = calculate_winning_probabilities(probs_1, probs_2)
 
 # Ensure total probability = 1
-total_prob = prob_2_wins + prob_1_wins + prob_tie
+total_prob = prob_1_wins + prob_2_wins + prob_tie
 
 # Print results
-print("Probability player 1 wins: ", np.round(prob_1_wins*100, 1), "%")
-print("Probability player 2 wins: ", np.round(prob_2_wins*100, 1), "%")
-print("Probability of a tie: ", np.round(prob_tie*100, 1), "%")
+print(f"Probability player 1 wins: {prob_1_wins * 100:.1f}%")
+print(f"Probability player 2 wins: {prob_2_wins * 100:.1f}%")
+print(f"Probability of a tie: {prob_tie * 100:.1f}%")
