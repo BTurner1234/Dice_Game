@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
 from tkinter import Canvas, PhotoImage
-from nine import calculate_dice_game_probabilities
+from calculations import calculate_dice_game_probabilities
 
 
 def create_dice_entries(frame, entries, num_dice):
