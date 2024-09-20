@@ -192,7 +192,7 @@ try:
     ''')
 
     st.latex(r'''
-    P(Player \space 2 \space win) = 1 - P(tie) - P(Player 1 win)
+    P(Player \space 2 \space win) = 1 - P(tie) - P(Player \space 1 \space win)
     ''')
 
 except ValueError as e:
