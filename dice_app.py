@@ -133,7 +133,7 @@ try:
 
     # Generalization formula in LaTeX
     st.markdown("""
-        **Generalization:**
+        **Generalisation:**
 
         We can now generalise for all values from 1 to the maximum value of the largest die of player 1. The probability is given by:
     """)
