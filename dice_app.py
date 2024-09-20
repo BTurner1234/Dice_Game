@@ -187,5 +187,13 @@ try:
     - $$max$$ represents the maximum value on the largest die.
     ''')
 
+    st.markdown(r'''
+    **Probability for Player 2 Winning:**
+    ''')
+
+    st.latex(r'''
+    P(Player \space 2 \space win) = 1 - P(tie) - P(Player 1 win)
+    ''')
+
 except ValueError as e:
     st.error(f"Error: {str(e)}")
