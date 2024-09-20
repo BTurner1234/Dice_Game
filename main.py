@@ -3,7 +3,7 @@ from tkinter import ttk
 from tkinter import messagebox
 from tkinter import Canvas, PhotoImage
 from calculations import calculate_dice_game_probabilities
-
+import random as rand
 
 def create_dice_entries(frame, entries, num_dice):
     for widget in frame.winfo_children():
@@ -68,7 +68,7 @@ class DiceGameProbabilityCalculator(tk.Tk):
         # Canvas for animation and images
         self.canvas = Canvas(self, width=400, height=300)
         self.canvas.grid(row=7, column=0, columnspan=2, padx=10, pady=10)
-        self.dice_image = PhotoImage(file="dice.png")  # Ensure you have a dice.png file
+        self.dice_image = PhotoImage(file="dice.png")
         self.dice = self.canvas.create_image(180, 150, image=self.dice_image)
 
         # Calculate button
@@ -129,12 +129,21 @@ class DiceGameProbabilityCalculator(tk.Tk):
 
     def animate_dice(self, callback):
         for i in range(10):
-            self.canvas.move(self.dice, 10, 0)
-            self.update()
-            self.after(50)
-            self.canvas.move(self.dice, -10, 0)
-            self.update()
-            self.after(50)
+            a = rand.random()
+            if a > 0.5:
+                self.canvas.move(self.dice, 10, 5)
+                self.update()
+                self.after(50)
+                self.canvas.move(self.dice, -10, -5)
+                self.update()
+                self.after(50)
+            else:
+                self.canvas.move(self.dice, 5, 10)
+                self.update()
+                self.after(50)
+                self.canvas.move(self.dice, -5, -10)
+                self.update()
+                self.after(50)
         self.after(0, callback)  # Call the callback after the animation loop completes
 
 
