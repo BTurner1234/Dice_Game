@@ -97,7 +97,7 @@ try:
 
     **Example:**
 
-    Let's assume we have four dice, with sides 9, 7, 7, and 5.
+    Let's assume player 1 has four dice, with sides 9, 7, 7, and 5.
     
     - The probability of 9 being the highest score is simply \( 1/9 \), as it must come from the 9-sided die.
     
@@ -135,24 +135,57 @@ try:
     st.markdown("""
         **Generalization:**
 
-        We can now generalize for all values from 1 to the maximum value of the largest die. The probability is given by:
+        We can now generalise for all values from 1 to the maximum value of the largest die of player 1. The probability is given by:
     """)
 
     st.latex(r'''
-    P(k) = \frac{1}{\prod_{i=k} v_{k+}} \times \sum_{i=0}^{n-1} \left( k^i \times (k-1)^{n-1-i} \right)
+    P_1(k) = \frac{1}{\prod_{i=k} v_{k+}} \times \sum_{i=0}^{n-1} \left( k^i \times (k-1)^{n-1-i} \right)
     ''')
 
     st.markdown(r'''
     Where:
-    - \( k \) is the value being considered.
-    - \( n \) is the number of dice with a maximum value at, or above, \( k \).
-    - \( V_{k+} \) are the maximum values of these dice. (At or above \( k \)).
+    - $$P_1(k)$$ is the probability of player 1 having a score of $$k$$.
+    - $$k$$ is the value being considered.
+    - $$n$$ is the number of dice with a maximum value at, or above, $$k$$.
+    - $$V_{k+}$$ are the maximum values of these dice. (At or above $$k$$).
 
     This gives a probability distribution for the highest value across the dice.
 
     This gives us the histogram for each player we see in the graphic above, which can then be used to calculate the winning and tieing probabilities.
+    
+    ---
+
+    **Probability for Player 1 Winning:**
+
+    To find the probability for Player 1 winning, we take the sum from 1 to \( k_{\text{max}} \) as follows:
+
     ''')
 
+    st.latex(r'''
+    P(Player \space 1 \space win) = \sum_{i=1}^{max} \left( P_1(i) \times \left( \sum_{j=1}^{i-1} P_2(j) \right) \right)
+    ''')
+
+    st.markdown(r'''
+    Where:
+    - $$P_1(i)$$ is the probability that Player 1 rolls $$i$$.
+    - $$P_2(j)$$ is the probability that Player 2 rolls $$j$$ with $$j < i$$.
+    - $$max$$ represents the maximum value on the largest die.
+
+    **Probability of a Tie:**
+
+    The probability of a tie can be found as:
+    ''')
+
+    st.latex(r'''
+    P(tie) = \sum_{i=1}^{max} \left( \space P_1(i) \times P_2(i) \space \right)
+    ''')
+
+    st.markdown(r'''
+    Where:
+    - $$P_1(i)$$ is the probability that Player 1 rolls $$i$$.
+    - $$P_2(j)$$ is the probability that Player 2 rolls $$j$$.
+    - $$max$$ represents the maximum value on the largest die.
+    ''')
 
 except ValueError as e:
     st.error(f"Error: {str(e)}")
