@@ -1,4 +1,6 @@
 import streamlit as st
+import os
+import requests
 import numpy as np
 import matplotlib.pyplot as plt
 from calculations import calculate_probabilities, calculate_dice_game_probabilities
@@ -195,20 +197,27 @@ try:
     P(Player \space 2 \space win) = 1 - P(tie) - P(Player \space 1 \space win)
     ''')
 
+    st.markdown(r'''
+    ---
+    ''')
+
+    st.markdown("## Probability Calculations Code")
+
+    # URL for the raw content of the calculations file on GitHub
+    url = "https://raw.githubusercontent.com/BTurner1234/Dice_Game/refs/heads/main/calculations.py"
+
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        code = response.text
+        st.code(code, language='python')
+    else:
+        st.write("Unable to load the calculations file.")
+
     st.markdown("""
     ---
     Created by [Bailey Turner](https://www.linkedin.com/in/bailey-t-7b7047313/)
     """)
-
-    st.markdown("## Probability Calculations Code")
-
-    # Open and display the calculations file content
-    with open("calculations.py", "r") as f:
-        code = f.read()
-
-    # Display the code with syntax highlighting
-    st.code(code, language="python")
-
 
 except ValueError as e:
     st.error(f"Error: {str(e)}")
