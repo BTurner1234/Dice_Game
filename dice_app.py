@@ -203,17 +203,6 @@ try:
 
     st.markdown("## Probability Calculations Code")
 
-    # URL for the raw content of the calculations file on GitHub
-    url = "https://raw.githubusercontent.com/BTurner1234/Dice_Game/refs/heads/main/calculations.py"
-
-    response = requests.get(url)
-
-    if response.status_code == 200:
-        code = response.text
-        st.code(code, language='python')
-    else:
-        st.write("Unable to load the calculations file.")
-
     # Open the local 'calculations.py' file
     with open("calculations.py", "r") as f:
         code = f.read()
