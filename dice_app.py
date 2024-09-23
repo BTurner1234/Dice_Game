@@ -195,5 +195,10 @@ try:
     P(Player \space 2 \space win) = 1 - P(tie) - P(Player \space 1 \space win)
     ''')
 
+    st.markdown("""
+    ---
+    Created by [Bailey Turner](https://www.linkedin.com/in/bailey-t-7b7047313/)
+    """)
+
 except ValueError as e:
     st.error(f"Error: {str(e)}")
