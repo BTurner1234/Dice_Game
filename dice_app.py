@@ -214,6 +214,13 @@ try:
     else:
         st.write("Unable to load the calculations file.")
 
+    # Open the local 'calculations.py' file
+    with open("calculations.py", "r") as f:
+        code = f.read()
+
+    # Display the code
+    st.code(code, language='python')
+
     st.markdown("""
     ---
     Created by [Bailey Turner](https://www.linkedin.com/in/bailey-t-7b7047313/)
