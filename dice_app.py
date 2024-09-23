@@ -200,5 +200,15 @@ try:
     Created by [Bailey Turner](https://www.linkedin.com/in/bailey-t-7b7047313/)
     """)
 
+    st.markdown("## Probability Calculations Code")
+
+    # Open and display the calculations file content
+    with open("calculations.py", "r") as f:
+        code = f.read()
+
+    # Display the code with syntax highlighting
+    st.code(code, language="python")
+
+
 except ValueError as e:
     st.error(f"Error: {str(e)}")
