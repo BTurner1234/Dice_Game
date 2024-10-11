@@ -217,8 +217,10 @@ try:
 
     st.markdown("""
     ---
-    Created by [Bailey Turner](https://www.linkedin.com/in/bailey-t-7b7047313/)
-    """)
+    <div style="text-align: right;">
+        Created by <a href="https://www.linkedin.com/in/bailey-t-7b7047313/">Bailey Turner</a>
+    </div>
+    """, unsafe_allow_html=True)
 
 except ValueError as e:
     st.error(f"Error: {str(e)}")
