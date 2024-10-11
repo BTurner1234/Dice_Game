@@ -210,15 +210,15 @@ try:
     # Display the code
     st.code(code, language='python')
 
-    st.markdown("""
-    ---
-    Created by [Bailey Turner](https://www.linkedin.com/in/bailey-t-7b7047313/)
-    """)
-
     # Add the section at the bottom for project reference
     st.markdown("""
     ---
     This interactive app is part of a project, extended from this blog post: [Raindrops & A Game Of Dice](https://mathsmusings.hashnode.dev/raindrops-a-game-of-dice)
+    """)
+
+    st.markdown("""
+    ---
+    Created by [Bailey Turner](https://www.linkedin.com/in/bailey-t-7b7047313/)
     """)
 
 except ValueError as e:
