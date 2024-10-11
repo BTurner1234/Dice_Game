@@ -101,9 +101,9 @@ try:
 
     Let's assume player 1 has four dice, with sides 9, 7, 7, and 5.
     
-    - The probability of 9 being the highest score is simply \( 1/9 \), as it must come from the 9-sided die.
+    - The probability of 9 being the highest score is simply $$1/9$$, as it must come from the 9-sided die.
     
-    - The same is true for 8 being the highest score, probability = \( 1/9 \).
+    - The same is true for 8 being the highest score, probability = $$1/9$$.
 
     **Calculating for 7:**
     
@@ -159,7 +159,7 @@ try:
 
     **Probability for Player 1 Winning:**
 
-    To find the probability for Player 1 winning, we take the sum from 1 to \( k_{\text{max}} \) as follows:
+    To find the probability for Player 1 winning, we take the sum from $$1$$ to $$k_{max}$$ as follows:
 
     ''')
 
