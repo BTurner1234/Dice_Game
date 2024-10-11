@@ -164,7 +164,7 @@ try:
     ''')
 
     st.latex(r'''
-    P(Player \space 1 \space win) = \sum_{i=1}^{max} \left( P_1(i) \times \left( \sum_{j=1}^{i-1} P_2(j) \right) \right)
+    P(\text{Player 1 win}) = \sum_{i=1}^{k_{\text{max}}} \left[ P_1(i) \times \left( \sum_{j=1}^{i-1} P_2(j) \right) \right]
     ''')
 
     st.markdown(r'''
@@ -179,7 +179,7 @@ try:
     ''')
 
     st.latex(r'''
-    P(tie) = \sum_{i=1}^{max} \left( \space P_1(i) \times P_2(i) \space \right)
+    P(\text{tie}) = \sum_{i=1}^{k_{\text{max}}} \left[ P_1(i) \times P_2(i) \right]
     ''')
 
     st.markdown(r'''
@@ -213,6 +213,12 @@ try:
     st.markdown("""
     ---
     Created by [Bailey Turner](https://www.linkedin.com/in/bailey-t-7b7047313/)
+    """)
+
+    # Add the section at the bottom for project reference
+    st.markdown("""
+    ---
+    This interactive app is part of a project, extended from this blog post: [Raindrops & A Game Of Dice](https://mathsmusings.hashnode.dev/raindrops-a-game-of-dice)
     """)
 
 except ValueError as e:
