@@ -101,9 +101,9 @@ try:
 
     Let's assume player 1 has four dice, with sides 9, 7, 7, and 5.
     
-    - The probability of 9 being the highest score is simply $$1/9$$, as it must come from the 9-sided die.
+    - The probability of 9 being the highest score is simply $$\\frac{1}{9}$$, as it must come from the 9-sided die.
     
-    - The same is true for 8 being the highest score, probability = $$1/9$$.
+    - The same is true for 8 being the highest score, the probability is equal to $$\\frac{1}{9}$$.
 
     **Calculating for 7:**
     
@@ -117,7 +117,7 @@ try:
 
     # Using LaTeX for the calculation:
     st.latex(r'''
-    \left( \frac{1}{9} \right), \quad \left( \frac{1}{7} \times \frac{6}{9} \right), \quad \left( \frac{1}{7} \times \frac{6}{9} \times \frac{6}{7} \right)
+    \left( \frac{1}{9} \right), \quad \left( \frac{6}{9} \cdot \frac{1}{7} \right), \quad \left( \frac{6}{9} \cdot \frac{6}{7} \cdot \frac{1}{7} \right)
     ''')
 
     # Continuing the markdown
@@ -129,8 +129,8 @@ try:
 
     # Using LaTeX again for the formula:
     st.latex(r'''
-    \left( \frac{1}{9} \times \frac{7}{7} \times \frac{7}{7} \right) + \left( \frac{6}{9} \times \frac{1}{7} \times \frac{7}{7} \right) + \left( \frac{6}{9} \times \frac{6}{7} \times \frac{1}{7} \right)
-        = \frac{1}{9 \times 7 \times 7} \times \left( 7^2 + \left( 6 \times 7 \right) + 6^2 \right)
+    \left( \frac{1}{9} \cdot \frac{7}{7} \cdot \frac{7}{7} \right) + \left( \frac{6}{9} \cdot \frac{1}{7} \cdot \frac{7}{7} \right) + \left( \frac{6}{9} \cdot \frac{6}{7} \cdot \frac{1}{7} \right)
+        = \frac{1}{9 \cdot 7 \cdot 7} \cdot \left( 7^2 + \left( 6 \cdot 7 \right) + 6^2 \right)
     ''')
 
     # Generalization formula in LaTeX
@@ -141,7 +141,7 @@ try:
     """)
 
     st.latex(r'''
-    P_1(k) = \frac{1}{\prod_{i=k} v_{k+}} \times \sum_{i=0}^{n-1} \left( k^i \times (k-1)^{n-1-i} \right)
+    P_1(k) = \frac{1}{\prod_{i=k} v_{k+}} \cdot \sum_{i=0}^{n-1} \left( k^i \cdot (k-1)^{n-1-i} \right)
     ''')
 
     st.markdown(r'''
@@ -164,7 +164,7 @@ try:
     ''')
 
     st.latex(r'''
-    P(\text{Player 1 win}) = \sum_{i=1}^{k_{\text{max}}} \left[ P_1(i) \times \left( \sum_{j=1}^{i-1} P_2(j) \right) \right]
+    P(\text{Player 1 win}) = \sum_{i=1}^{k_{\text{max}}} \left[ P_1(i) \cdot \left( \sum_{j=1}^{i-1} P_2(j) \right) \right]
     ''')
 
     st.markdown(r'''
@@ -179,7 +179,7 @@ try:
     ''')
 
     st.latex(r'''
-    P(\text{tie}) = \sum_{i=1}^{k_{\text{max}}} \left[ P_1(i) \times P_2(i) \right]
+    P(\text{tie}) = \sum_{i=1}^{k_{\text{max}}} \left[ P_1(i) \cdot P_2(i) \right]
     ''')
 
     st.markdown(r'''
